@@ -986,18 +986,18 @@ export default function Home() {
       {/* ═══════════════════════════════════════
           FOOTER
           ═══════════════════════════════════════ */}
-      <footer className="border-t border-border bg-white py-16">
+      <footer className="border-t border-[#3a322b] bg-[#2b2319] py-16">
         <div className="mx-auto max-w-[1120px] px-6">
           <div className="grid gap-12 md:grid-cols-4">
             {/* Brand */}
             <div className="md:col-span-1">
               <a href="#" className="flex items-center gap-2.5">
                 <LogoMark />
-                <span className="text-[20px] font-extrabold tracking-tight text-primary">
+                <span className="text-[20px] font-extrabold tracking-tight text-white">
                   DecoAI
                 </span>
               </a>
-              <p className="mt-4 text-[14px] leading-[1.6] text-text-light">
+              <p className="mt-4 text-[14px] leading-[1.6] text-neutral-400">
                 AI-powered room redesign for everyone. Transform your space in
                 seconds.
               </p>
@@ -1005,7 +1005,7 @@ export default function Home() {
 
             {/* Links */}
             <div>
-              <h4 className="text-[13px] font-bold uppercase tracking-wider text-primary">
+              <h4 className="text-[13px] font-bold uppercase tracking-wider text-neutral-300">
                 Product
               </h4>
               <ul className="mt-4 space-y-3">
@@ -1018,7 +1018,7 @@ export default function Home() {
                   <li key={l}>
                     <a
                       href="#"
-                      className="text-[14px] text-text-light transition-colors hover:text-accent"
+                      className="text-[14px] text-neutral-400 transition-colors hover:text-white"
                     >
                       {l}
                     </a>
@@ -1028,7 +1028,7 @@ export default function Home() {
             </div>
 
             <div>
-              <h4 className="text-[13px] font-bold uppercase tracking-wider text-primary">
+              <h4 className="text-[13px] font-bold uppercase tracking-wider text-neutral-300">
                 Resources
               </h4>
               <ul className="mt-4 space-y-3">
@@ -1036,7 +1036,7 @@ export default function Home() {
                   <li key={l}>
                     <a
                       href="#"
-                      className="text-[14px] text-text-light transition-colors hover:text-accent"
+                      className="text-[14px] text-neutral-400 transition-colors hover:text-white"
                     >
                       {l}
                     </a>
@@ -1046,7 +1046,7 @@ export default function Home() {
             </div>
 
             <div>
-              <h4 className="text-[13px] font-bold uppercase tracking-wider text-primary">
+              <h4 className="text-[13px] font-bold uppercase tracking-wider text-neutral-300">
                 Company
               </h4>
               <ul className="mt-4 space-y-3">
@@ -1059,7 +1059,7 @@ export default function Home() {
                   <li key={l}>
                     <a
                       href="#"
-                      className="text-[14px] text-text-light transition-colors hover:text-accent"
+                      className="text-[14px] text-neutral-400 transition-colors hover:text-white"
                     >
                       {l}
                     </a>
@@ -1070,8 +1070,8 @@ export default function Home() {
           </div>
 
           {/* Bottom bar */}
-          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 md:flex-row">
-            <p className="text-[13px] text-muted">
+          <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[#3a322b] pt-8 md:flex-row">
+            <p className="text-[13px] text-neutral-500">
               &copy; 2026 DecoAI. All rights reserved.
             </p>
             <div className="flex gap-6">
@@ -1079,7 +1079,7 @@ export default function Home() {
                 <a
                   key={s}
                   href="#"
-                  className="text-[13px] text-muted transition-colors hover:text-accent"
+                  className="text-[13px] text-neutral-500 transition-colors hover:text-white"
                 >
                   {s}
                 </a>
