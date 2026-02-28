@@ -1022,7 +1022,9 @@
               </div>
 
               {/* Room Types — sliding right marquee */}
-              <div className="sr overflow-hidden mb-12 -mx-6">
+              <div className="sr relative overflow-hidden mb-12 -mx-6">
+                <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 sm:w-32 z-10" style={{ background: 'linear-gradient(to right, #F9F7F2, transparent)' }} />
+                <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 sm:w-32 z-10" style={{ background: 'linear-gradient(to left, #F9F7F2, transparent)' }} />
                 <div className="marquee-right flex gap-4 w-max px-2">
                   {[...ROOM_TYPES, ...ROOM_TYPES].map((room, i) => (
                     <div key={`${room.name}-${i}`} className="flex-shrink-0 w-[200px] sm:w-[240px]">
@@ -1038,7 +1040,9 @@
               </div>
 
               {/* Design Styles — row 1 sliding left */}
-              <div className="sr overflow-hidden mb-4 -mx-6">
+              <div className="sr relative overflow-hidden mb-4 -mx-6">
+                <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 sm:w-32 z-10" style={{ background: 'linear-gradient(to right, #F9F7F2, transparent)' }} />
+                <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 sm:w-32 z-10" style={{ background: 'linear-gradient(to left, #F9F7F2, transparent)' }} />
                 <div className="marquee-left flex gap-4 w-max px-2">
                   {[...DESIGN_STYLES.slice(0, 5), ...DESIGN_STYLES.slice(0, 5)].map((style, i) => (
                     <div
@@ -1058,7 +1062,9 @@
               </div>
 
               {/* Design Styles — row 2 sliding right */}
-              <div className="sr overflow-hidden -mx-6">
+              <div className="sr relative overflow-hidden -mx-6">
+                <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 sm:w-32 z-10" style={{ background: 'linear-gradient(to right, #F9F7F2, transparent)' }} />
+                <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 sm:w-32 z-10" style={{ background: 'linear-gradient(to left, #F9F7F2, transparent)' }} />
                 <div className="marquee-right flex gap-4 w-max px-2" style={{ animationDuration: '35s' }}>
                   {[...DESIGN_STYLES.slice(5), ...DESIGN_STYLES.slice(5)].map((style, i) => (
                     <div
@@ -1132,16 +1138,24 @@
                     </div>
                   </div>
                 );
+                const FadeEdges = () => (
+                  <>
+                    <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 sm:w-32 z-10" style={{ background: 'linear-gradient(to right, #F0EBE2, transparent)' }} />
+                    <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 sm:w-32 z-10" style={{ background: 'linear-gradient(to left, #F0EBE2, transparent)' }} />
+                  </>
+                );
                 return (
                   <div className="space-y-5">
                     {/* Row 1 — slides left */}
-                    <div className="sr overflow-hidden -mx-6">
+                    <div className="sr relative overflow-hidden -mx-6">
+                      <FadeEdges />
                       <div className="marquee-left flex gap-5 w-max px-2" style={{ animationDuration: '40s' }}>
                         {[...ROW1, ...ROW1].map((t, i) => <Card key={`r1-${i}`} t={t} i={i} />)}
                       </div>
                     </div>
                     {/* Row 2 — slides right */}
-                    <div className="sr overflow-hidden -mx-6">
+                    <div className="sr relative overflow-hidden -mx-6">
+                      <FadeEdges />
                       <div className="marquee-right flex gap-5 w-max px-2" style={{ animationDuration: '45s' }}>
                         {[...ROW2, ...ROW2].map((t, i) => <Card key={`r2-${i}`} t={t} i={i} />)}
                       </div>
@@ -1191,56 +1205,72 @@
             </div>
           </section>
 
-          {/* ═══ SECTION 7: FINAL CTA + FOOTER ═══ */}
+          {/* ═══ SECTION 8: FINAL CTA BANNER + FOOTER ═══ */}
           <section id="download" className="bg-cream-dark">
-            {/* CTA */}
-            <div className="py-20 md:py-28">
-              <div className="max-w-[500px] mx-auto px-6 text-center">
-                <span className="sr inline-block text-[11px] font-bold tracking-[0.15em] uppercase text-coral mb-3">
-                  Get Started
-                </span>
-                <h2 className="sr font-display font-bold text-[30px] sm:text-[36px] text-brown leading-tight">
-                  Your dream room is<br />
-                  <span className="gradient-text">one photo away</span>
-                </h2>
-                <p className="sr text-[15px] text-brown-light mt-4">
-                  Download free. No account needed.
-                </p>
-                <div className="sr flex flex-wrap justify-center gap-4 mt-7">
-                  {/* App Store badge */}
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-3 h-[56px] bg-brown rounded-[12px] px-5 hover:bg-brown/90 transition-all duration-250"
-                  >
-                    <svg className="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                    </svg>
-                    <div className="text-left">
-                      <div className="text-[10px] font-medium leading-none text-white/70">Download on the</div>
-                      <div className="mt-0.5 text-[18px] font-bold leading-tight text-white">App Store</div>
-                    </div>
-                  </a>
-                  {/* Google Play badge */}
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-3 h-[56px] bg-brown rounded-[12px] px-5 hover:bg-brown/90 transition-all duration-250"
-                  >
-                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-                      <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92z" fill="#4285F4"/>
-                      <path d="M17.727 8.063L5.201.862C4.899.69 4.57.617 4.25.636l9.542 9.542 3.935-2.115z" fill="#EA4335"/>
-                      <path d="M17.727 15.937l-3.935-3.935-9.542 9.542c.32.02.649-.054.951-.226l12.526-5.381z" fill="#34A853"/>
-                      <path d="M21.397 10.693l-3.67-1.63L13.792 12l3.935 3.937 3.67-1.63c.856-.492.856-1.723 0-2.614z" fill="#FBBC05"/>
-                    </svg>
-                    <div className="text-left">
-                      <div className="text-[10px] font-medium leading-none text-white/70">GET IT ON</div>
-                      <div className="mt-0.5 text-[18px] font-bold leading-tight text-white">Google Play</div>
-                    </div>
-                  </a>
+            {/* CTA Banner */}
+            <div className="max-w-[1200px] mx-auto px-6 py-16 md:py-24">
+              <div className="sr relative rounded-[28px] overflow-hidden" style={{ minHeight: '420px' }}>
+                {/* Background image */}
+                <img
+                  src="/decoki/room-living.jpg"
+                  alt=""
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%' }}
+                  draggable="false"
+                />
+                {/* Dark overlay */}
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(44,36,24,0.9) 0%, rgba(44,36,24,0.72) 50%, rgba(44,36,24,0.88) 100%)' }} />
+                {/* Coral accent glow */}
+                <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full opacity-[0.07]" style={{ background: 'radial-gradient(circle, #E8524E, transparent 70%)', filter: 'blur(60px)' }} />
+                <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full opacity-[0.05]" style={{ background: 'radial-gradient(circle, #F2856D, transparent 70%)', filter: 'blur(50px)' }} />
+
+                {/* Content */}
+                <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 py-16 md:py-20">
+                  <span className="inline-block text-[11px] font-bold tracking-[0.2em] uppercase text-coral mb-4">
+                    Get Started
+                  </span>
+                  <h2 className="font-display font-bold text-[32px] sm:text-[40px] md:text-[48px] text-white leading-[1.1]">
+                    Your dream room is<br />
+                    <span className="gradient-text">one photo away</span>
+                  </h2>
+                  <p className="text-[15px] md:text-[16px] text-white/55 mt-5 max-w-[400px]">
+                    Download free. No account needed. Transform any room in seconds.
+                  </p>
+                  <div className="flex flex-wrap justify-center gap-4 mt-9">
+                    {/* App Store badge */}
+                    <a
+                      href="#"
+                      className="inline-flex items-center gap-3 h-[56px] bg-white/10 backdrop-blur-md border border-white/15 rounded-[14px] px-6 hover:bg-white/20 hover:border-white/25 transition-all duration-300"
+                    >
+                      <svg className="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                      </svg>
+                      <div className="text-left">
+                        <div className="text-[10px] font-medium leading-none text-white/60">Download on the</div>
+                        <div className="mt-0.5 text-[18px] font-bold leading-tight text-white">App Store</div>
+                      </div>
+                    </a>
+                    {/* Google Play badge */}
+                    <a
+                      href="#"
+                      className="inline-flex items-center gap-3 h-[56px] bg-white/10 backdrop-blur-md border border-white/15 rounded-[14px] px-6 hover:bg-white/20 hover:border-white/25 transition-all duration-300"
+                    >
+                      <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                        <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92z" fill="#4285F4"/>
+                        <path d="M17.727 8.063L5.201.862C4.899.69 4.57.617 4.25.636l9.542 9.542 3.935-2.115z" fill="#EA4335"/>
+                        <path d="M17.727 15.937l-3.935-3.935-9.542 9.542c.32.02.649-.054.951-.226l12.526-5.381z" fill="#34A853"/>
+                        <path d="M21.397 10.693l-3.67-1.63L13.792 12l3.935 3.937 3.67-1.63c.856-.492.856-1.723 0-2.614z" fill="#FBBC05"/>
+                      </svg>
+                      <div className="text-left">
+                        <div className="text-[10px] font-medium leading-none text-white/60">GET IT ON</div>
+                        <div className="mt-0.5 text-[18px] font-bold leading-tight text-white">Google Play</div>
+                      </div>
+                    </a>
+                  </div>
+                  <p className="text-[13px] text-white/40 mt-8 flex items-center justify-center gap-1.5">
+                    <span className="text-coral tracking-wide">★★★★★</span>
+                    <span>Loved by 50,000+ homeowners</span>
+                  </p>
                 </div>
-                <p className="sr text-[13px] text-brown-light mt-6 flex items-center justify-center gap-1.5">
-                  <span className="text-coral tracking-wide">★★★★★</span>
-                  <span>Loved by 50,000+ homeowners</span>
-                </p>
               </div>
             </div>
 
