@@ -1088,87 +1088,67 @@
           </section>
 
           {/* ═══ SECTION 6: TESTIMONIALS ═══ */}
-          <section className="bg-brown py-20 md:py-28 overflow-hidden">
+          <section className="bg-cream-dark py-20 md:py-28 overflow-hidden">
             <div className="max-w-[1200px] mx-auto px-6">
               <div className="text-center mb-14">
                 <span className="sr inline-block text-[11px] font-bold tracking-[0.15em] uppercase text-coral mb-3">
                   Testimonials
                 </span>
-                <h2 className="sr font-display font-bold text-[30px] sm:text-[36px] text-[#F9F7F2] leading-tight">
+                <h2 className="sr font-display font-bold text-[30px] sm:text-[36px] text-brown leading-tight">
                   Loved by homeowners
                 </h2>
-                <p className="sr text-[15px] md:text-[16px] text-brown-muted mt-3">
+                <p className="sr text-[15px] md:text-[16px] text-brown-light mt-3">
                   See what our users are saying
                 </p>
               </div>
 
-              <div className="sr grid md:grid-cols-3 gap-5">
-                {[
-                  {
-                    name: 'Sarah M.',
-                    role: 'Interior enthusiast',
-                    text: 'I completely redesigned my living room before even buying a single piece of furniture. The AI results were shockingly realistic — my contractor thought I hired a designer.',
-                    stars: 5,
-                  },
-                  {
-                    name: 'David K.',
-                    role: 'Homeowner',
-                    text: 'The wall recolor feature saved me from painting my bedroom the wrong shade of blue. Tried 10 colors in 2 minutes instead of buying sample cans. Absolute game changer.',
-                    stars: 5,
-                  },
-                  {
-                    name: 'Emma L.',
-                    role: 'Real estate agent',
-                    text: 'I use Decoki to show clients the potential of empty properties. Upload a photo, pick a style, and suddenly a bare room looks like a magazine spread. My listings sell faster now.',
-                    stars: 5,
-                  },
-                  {
-                    name: 'James R.',
-                    role: 'DIY renovator',
-                    text: 'Replaced my old couch virtually before committing to buy a new one. The replace object feature is incredible — it blends perfectly with the existing room.',
-                    stars: 5,
-                  },
-                  {
-                    name: 'Aisha T.',
-                    role: 'Apartment renter',
-                    text: 'Even as a renter I can dream up my perfect space. Tried Japanese, Scandinavian, and Bohemian on my tiny studio — the Scandi look won. Moving forward with it!',
-                    stars: 5,
-                  },
-                  {
-                    name: 'Marco B.',
-                    role: 'Architect',
-                    text: 'I was skeptical at first, but the quality blew me away. I now use it for rapid concept presentations to clients. 30 seconds per variation instead of hours in 3D software.',
-                    stars: 5,
-                  },
-                ].map((t, i) => (
-                  <div
-                    key={i}
-                    className="bg-white/[0.06] backdrop-blur-sm border border-white/[0.08] rounded-[20px] p-6 flex flex-col"
-                    style={{ transitionDelay: `${i * 0.08}s` }}
-                  >
-                    {/* Stars */}
+              {(() => {
+                const ROW1 = [
+                  { name: 'Sarah M.', role: 'Interior enthusiast', text: 'I completely redesigned my living room before even buying a single piece of furniture. The AI results were shockingly realistic — my contractor thought I hired a designer.', stars: 5 },
+                  { name: 'David K.', role: 'Homeowner', text: 'The wall recolor feature saved me from painting my bedroom the wrong shade of blue. Tried 10 colors in 2 minutes instead of buying sample cans. Absolute game changer.', stars: 5 },
+                  { name: 'Emma L.', role: 'Real estate agent', text: 'I use Decoki to show clients the potential of empty properties. Upload a photo, pick a style, and suddenly a bare room looks like a magazine spread. My listings sell faster now.', stars: 5 },
+                ];
+                const ROW2 = [
+                  { name: 'James R.', role: 'DIY renovator', text: 'Replaced my old couch virtually before committing to buy a new one. The replace object feature is incredible — it blends perfectly with the existing room.', stars: 5 },
+                  { name: 'Aisha T.', role: 'Apartment renter', text: 'Even as a renter I can dream up my perfect space. Tried Japanese, Scandinavian, and Bohemian on my tiny studio — the Scandi look won. Moving forward with it!', stars: 5 },
+                  { name: 'Marco B.', role: 'Architect', text: 'I was skeptical at first, but the quality blew me away. I now use it for rapid concept presentations to clients. 30 seconds per variation instead of hours in 3D software.', stars: 5 },
+                ];
+                const Card = ({ t, i }) => (
+                  <div className="flex-shrink-0 w-[340px] sm:w-[380px] bg-white rounded-[20px] p-6 flex flex-col shadow-[0_2px_20px_rgba(44,36,24,0.06)]">
                     <div className="flex gap-0.5 mb-4">
                       {Array.from({ length: t.stars }).map((_, s) => (
                         <span key={s} className="text-coral text-[14px]">★</span>
                       ))}
                     </div>
-                    {/* Quote */}
-                    <p className="text-[14px] text-[#F9F7F2]/80 leading-relaxed flex-1">
-                      "{t.text}"
-                    </p>
-                    {/* Author */}
-                    <div className="flex items-center gap-3 mt-5 pt-5 border-t border-white/[0.08]">
-                      <div className="w-10 h-10 rounded-full bg-coral/20 flex items-center justify-center flex-shrink-0">
+                    <p className="text-[14px] text-brown-light leading-relaxed flex-1">"{t.text}"</p>
+                    <div className="flex items-center gap-3 mt-5 pt-5 border-t border-divider">
+                      <div className="w-10 h-10 rounded-full bg-coral/10 flex items-center justify-center flex-shrink-0">
                         <span className="text-[14px] font-bold text-coral">{t.name.charAt(0)}</span>
                       </div>
                       <div>
-                        <div className="text-[13px] font-semibold text-[#F9F7F2]">{t.name}</div>
-                        <div className="text-[11px] text-brown-muted">{t.role}</div>
+                        <div className="text-[13px] font-semibold text-brown">{t.name}</div>
+                        <div className="text-[11px] text-brown-light">{t.role}</div>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                );
+                return (
+                  <div className="space-y-5">
+                    {/* Row 1 — slides left */}
+                    <div className="sr overflow-hidden -mx-6">
+                      <div className="marquee-left flex gap-5 w-max px-2" style={{ animationDuration: '40s' }}>
+                        {[...ROW1, ...ROW1].map((t, i) => <Card key={`r1-${i}`} t={t} i={i} />)}
+                      </div>
+                    </div>
+                    {/* Row 2 — slides right */}
+                    <div className="sr overflow-hidden -mx-6">
+                      <div className="marquee-right flex gap-5 w-max px-2" style={{ animationDuration: '45s' }}>
+                        {[...ROW2, ...ROW2].map((t, i) => <Card key={`r2-${i}`} t={t} i={i} />)}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
           </section>
 
@@ -1301,7 +1281,7 @@
                     <h4 className="text-[11px] font-bold tracking-[0.12em] uppercase text-brown-light mb-3">Legal</h4>
                     <div className="flex flex-col gap-2">
                       <a href="/privacy.html" className="text-[13px] text-brown-light hover:text-brown transition-colors">Privacy Policy</a>
-                      <a href="#" className="text-[13px] text-brown-light hover:text-brown transition-colors">Terms of Service</a>
+                      <a href="/terms.html" className="text-[13px] text-brown-light hover:text-brown transition-colors">Terms of Service</a>
                       <a href="/contact.html" className="text-[13px] text-brown-light hover:text-brown transition-colors">Contact</a>
                     </div>
                   </div>
