@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
 
 /* ═══════════════════════════════════════════
    SVG ICONS
@@ -118,6 +119,29 @@ function GripIcon({ className = "w-5 h-5" }: { className?: string }) {
    DATA
    ═══════════════════════════════════════════ */
 
+const SHOWCASE_SETS = [
+  [
+    { label: "Interior", before: "/showcase/interior-before.png", after: "/showcase/interior-after.png" },
+    { label: "Interior 2", before: "/showcase/interior-before-2.png", after: "/showcase/interior-after-2.png" },
+    { label: "Exterior", before: "/showcase/exterior-before.png", after: "/showcase/exterior-after.png" },
+  ],
+  [
+    { label: "Interior 2", before: "/showcase/interior-before-2.png", after: "/showcase/interior-after-2.png" },
+    { label: "Garden", before: "/showcase/garden-before.png", after: "/showcase/garden-after.png" },
+    { label: "Interior", before: "/showcase/interior-before.png", after: "/showcase/interior-after.png" },
+  ],
+  [
+    { label: "Exterior", before: "/showcase/exterior-before.png", after: "/showcase/exterior-after.png" },
+    { label: "Interior", before: "/showcase/interior-before.png", after: "/showcase/interior-after.png" },
+    { label: "Garden", before: "/showcase/garden-before.png", after: "/showcase/garden-after.png" },
+  ],
+  [
+    { label: "Garden", before: "/showcase/garden-before.png", after: "/showcase/garden-after.png" },
+    { label: "Exterior", before: "/showcase/exterior-before.png", after: "/showcase/exterior-after.png" },
+    { label: "Interior 2", before: "/showcase/interior-before-2.png", after: "/showcase/interior-after-2.png" },
+  ],
+];
+
 const NAV_LINKS = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Styles", href: "#styles" },
@@ -126,29 +150,29 @@ const NAV_LINKS = [
 ];
 
 const ROOM_TYPES = [
-  { name: "Living Room", icon: "🛋️", gradient: "from-red-50 to-orange-50" },
-  { name: "Bedroom", icon: "🛏️", gradient: "from-indigo-50 to-purple-50" },
-  { name: "Kitchen", icon: "🍳", gradient: "from-emerald-50 to-teal-50" },
-  { name: "Bathroom", icon: "🛁", gradient: "from-cyan-50 to-sky-50" },
-  { name: "Dining Room", icon: "🪑", gradient: "from-rose-50 to-pink-50" },
-  { name: "Home Office", icon: "💻", gradient: "from-violet-50 to-fuchsia-50" },
-  { name: "Kids Room", icon: "🧸", gradient: "from-yellow-50 to-amber-50" },
-  { name: "Outdoor", icon: "🌿", gradient: "from-lime-50 to-green-50" },
+  { name: "Living Room", image: "/rooms/living-room.jpg" },
+  { name: "Bedroom", image: "/rooms/bedroom.jpg" },
+  { name: "Kitchen", image: "/rooms/kitchen.jpg" },
+  { name: "Bathroom", image: "/rooms/bathroom.jpg" },
+  { name: "Dining Room", image: "/rooms/dining-room.png" },
+  { name: "Home Office", image: "/rooms/home-office.png" },
+  { name: "Gaming Room", image: "/rooms/gaming-room.png" },
+  { name: "Outdoor", image: "/rooms/outdoor.png" },
 ];
 
 const DESIGN_STYLES = [
-  { name: "Modern", gradient: "from-zinc-200 to-zinc-100" },
-  { name: "Minimalist", gradient: "from-stone-200 to-stone-100" },
-  { name: "Scandinavian", gradient: "from-sky-100 to-blue-50" },
-  { name: "Industrial", gradient: "from-gray-300 to-gray-200" },
-  { name: "Bohemian", gradient: "from-orange-200 to-amber-100" },
-  { name: "Mid-Century", gradient: "from-yellow-200 to-orange-100" },
-  { name: "Contemporary", gradient: "from-slate-200 to-slate-100" },
-  { name: "Traditional", gradient: "from-amber-200 to-yellow-100" },
-  { name: "Rustic", gradient: "from-amber-300 to-orange-200" },
-  { name: "Art Deco", gradient: "from-yellow-300 to-amber-200" },
-  { name: "Japanese", gradient: "from-stone-300 to-stone-200" },
-  { name: "Coastal", gradient: "from-cyan-200 to-sky-100" },
+  { name: "Modern", images: ["/styles/modern-1.jpg", "/styles/modern-2.jpg"] },
+  { name: "Minimalist", images: ["/styles/minimalist-1.jpg", "/styles/minimalist-2.jpg"] },
+  { name: "Scandinavian", images: ["/styles/scandinavian-1.jpg", "/styles/scandinavian-2.jpg"] },
+  { name: "Industrial", images: ["/styles/industrial-1.jpg", "/styles/industrial-2.png"] },
+  { name: "Bohemian", images: ["/styles/bohemian-1.jpg", "/styles/bohemian-2.jpg"] },
+  { name: "Mid-Century", images: ["/styles/mid-century-1.jpg", "/styles/mid-century-2.jpg"] },
+  { name: "Contemporary", images: ["/styles/contemporary-1.jpg", "/styles/contemporary-2.jpg"] },
+  { name: "Traditional", images: ["/styles/traditional-1.jpg", "/styles/traditional-2.png"] },
+  { name: "Rustic", images: ["/styles/rustic-1.jpg", "/styles/rustic-2.jpg"] },
+  { name: "Art Deco", images: ["/styles/art-deco-1.jpg", "/styles/art-deco-2.png"] },
+  { name: "Japanese", images: ["/styles/japanese-1.jpg", "/styles/japanese-2.png"] },
+  { name: "Coastal", images: ["/styles/coastal-1.jpg", "/styles/coastal-2.jpg"] },
 ];
 
 const FEATURES = [
@@ -220,6 +244,8 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [sliderPos, setSliderPos] = useState(50);
+  const [showcaseIndex, setShowcaseIndex] = useState(0);
+  const [styleImageIndex, setStyleImageIndex] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef(false);
 
@@ -242,6 +268,22 @@ export default function Home() {
     );
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
+  }, []);
+
+  /* ── Showcase auto-rotation ── */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowcaseIndex((prev) => (prev + 1) % SHOWCASE_SETS.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  /* ── Style images auto-rotation ── */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStyleImageIndex((prev) => (prev + 1) % 2);
+    }, 3500);
+    return () => clearInterval(interval);
   }, []);
 
   /* ── Before/After slider logic ── */
@@ -424,46 +466,28 @@ export default function Home() {
                 }}
               >
                 {/* AFTER — full background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-100 via-orange-50 to-rose-100">
-                  <div className="flex h-full flex-col items-center justify-center p-8">
-                    <div className="rounded-[12px] bg-white/70 px-6 py-3 shadow-sm backdrop-blur-sm">
-                      <span className="text-[16px] font-bold text-primary">
-                        Redesigned Living Room
-                      </span>
-                    </div>
-                    <div className="mt-4 flex gap-3">
-                      <div className="h-16 w-24 rounded-[12px] bg-amber-200/70" />
-                      <div className="h-16 w-32 rounded-[12px] bg-orange-200/70" />
-                      <div className="h-16 w-20 rounded-[12px] bg-rose-200/70" />
-                    </div>
-                    <div className="mt-3 flex gap-3">
-                      <div className="h-10 w-40 rounded-[12px] bg-amber-100/80" />
-                      <div className="h-10 w-28 rounded-[12px] bg-orange-100/80" />
-                    </div>
-                  </div>
+                <div className="absolute inset-0">
+                  <Image
+                    src="/showcase/interior-after.png"
+                    alt="Redesigned room"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                 </div>
 
                 {/* BEFORE — clipped overlay */}
                 <div
-                  className="absolute inset-0 bg-gradient-to-br from-gray-200 via-gray-300 to-gray-250"
+                  className="absolute inset-0"
                   style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
                 >
-                  <div className="flex h-full flex-col items-center justify-center p-8">
-                    <div className="rounded-[12px] bg-white/60 px-6 py-3 backdrop-blur-sm">
-                      <span className="text-[16px] font-bold text-gray-500">
-                        Original Room
-                      </span>
-                    </div>
-                    <div className="mt-4 flex gap-3">
-                      <div className="h-16 w-24 rounded-[12px] bg-gray-400/50" />
-                      <div className="h-16 w-32 rounded-[12px] bg-gray-400/40" />
-                      <div className="h-16 w-20 rounded-[12px] bg-gray-400/50" />
-                    </div>
-                    <div className="mt-3 flex gap-3">
-                      <div className="h-10 w-40 rounded-[12px] bg-gray-300/60" />
-                      <div className="h-10 w-28 rounded-[12px] bg-gray-300/60" />
-                    </div>
-                  </div>
+                  <Image
+                    src="/showcase/interior-before.png"
+                    alt="Original room"
+                    fill
+                    className="object-cover"
+                    priority
+                  />
                 </div>
 
                 {/* Slider handle */}
@@ -599,73 +623,81 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="reveal mt-16 grid gap-6 md:grid-cols-3">
-              {[
-                {
-                  label: "Living Room",
-                  before: "from-stone-300 to-stone-200",
-                  after: "from-amber-200 via-orange-100 to-rose-100",
-                },
-                {
-                  label: "Kitchen",
-                  before: "from-gray-300 to-gray-200",
-                  after: "from-emerald-200 via-teal-100 to-cyan-100",
-                },
-                {
-                  label: "Bedroom",
-                  before: "from-zinc-300 to-zinc-200",
-                  after: "from-indigo-200 via-violet-100 to-purple-100",
-                },
-              ].map((room) => (
+            {/* Layered crossfade — all sets stacked, only active one visible */}
+            <div className="reveal mt-16 relative">
+              {SHOWCASE_SETS.map((set, setIdx) => (
                 <div
-                  key={room.label}
-                  className="group overflow-hidden rounded-[12px] border border-border bg-white shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-shadow hover:shadow-[0_18px_45px_rgba(0,0,0,0.1)]"
+                  key={setIdx}
+                  className={`grid gap-6 md:grid-cols-3 transition-opacity duration-[1200ms] ease-in-out ${
+                    setIdx === showcaseIndex
+                      ? "relative opacity-100"
+                      : "pointer-events-none absolute inset-0 opacity-0"
+                  }`}
                 >
-                  {/* Before */}
-                  <div
-                    className={`relative aspect-[4/3] bg-gradient-to-br ${room.before}`}
-                  >
-                    <div className="flex h-full items-center justify-center">
-                      <div className="flex flex-col items-center gap-2">
-                        <div className="h-12 w-20 rounded-[6px] bg-white/30" />
-                        <div className="h-8 w-28 rounded-[6px] bg-white/20" />
+                  {set.map((room, i) => (
+                    <div
+                      key={i}
+                      className="group overflow-hidden rounded-[16px] border border-border bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05)]"
+                    >
+                      {/* Before */}
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <Image
+                          src={room.before}
+                          alt={`${room.label} before`}
+                          fill
+                          className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.03]"
+                        />
+                        <span className="absolute bottom-3 left-3 rounded-full bg-primary/60 px-2.5 py-0.5 text-xs font-bold text-white backdrop-blur-sm">
+                          Before
+                        </span>
+                      </div>
+                      {/* Arrow */}
+                      <div className="flex items-center justify-center py-3">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-white">
+                          <svg
+                            className="h-4 w-4"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                          >
+                            <line x1="12" y1="5" x2="12" y2="19" />
+                            <polyline points="19 12 12 19 5 12" />
+                          </svg>
+                        </div>
+                      </div>
+                      {/* After */}
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <Image
+                          src={room.after}
+                          alt={`${room.label} after`}
+                          fill
+                          className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.03]"
+                        />
+                        <span className="absolute bottom-3 left-3 rounded-full bg-accent/90 px-2.5 py-0.5 text-xs font-bold text-white backdrop-blur-sm">
+                          After — {room.label}
+                        </span>
                       </div>
                     </div>
-                    <span className="absolute bottom-3 left-3 rounded-full bg-primary/60 px-2.5 py-0.5 text-xs font-bold text-white backdrop-blur-sm">
-                      Before
-                    </span>
-                  </div>
-                  {/* Arrow */}
-                  <div className="flex items-center justify-center py-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-white">
-                      <svg
-                        className="h-4 w-4"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      >
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <polyline points="19 12 12 19 5 12" />
-                      </svg>
-                    </div>
-                  </div>
-                  {/* After */}
-                  <div
-                    className={`relative aspect-[4/3] bg-gradient-to-br ${room.after}`}
-                  >
-                    <div className="flex h-full items-center justify-center">
-                      <div className="flex flex-col items-center gap-2">
-                        <div className="h-12 w-20 rounded-[6px] bg-white/40" />
-                        <div className="h-8 w-28 rounded-[6px] bg-white/30" />
-                      </div>
-                    </div>
-                    <span className="absolute bottom-3 left-3 rounded-full bg-accent/90 px-2.5 py-0.5 text-xs font-bold text-white backdrop-blur-sm">
-                      After — {room.label}
-                    </span>
-                  </div>
+                  ))}
                 </div>
+              ))}
+            </div>
+
+            {/* Dot indicators */}
+            <div className="mt-8 flex items-center justify-center gap-2.5">
+              {SHOWCASE_SETS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setShowcaseIndex(i)}
+                  className={`rounded-full transition-all duration-500 ease-in-out ${
+                    i === showcaseIndex
+                      ? "h-2.5 w-7 bg-accent"
+                      : "h-2.5 w-2.5 bg-border hover:bg-muted"
+                  }`}
+                  aria-label={`Show set ${i + 1}`}
+                />
               ))}
             </div>
           </div>
@@ -693,12 +725,21 @@ export default function Home() {
               {ROOM_TYPES.map((room) => (
                 <button
                   key={room.name}
-                  className={`group relative flex flex-col items-center gap-3 rounded-[12px] border border-border bg-gradient-to-br ${room.gradient} p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]`}
+                  className="group relative overflow-hidden rounded-[12px] border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
                 >
-                  <span className="text-3xl">{room.icon}</span>
-                  <span className="text-[14px] font-bold text-primary">
-                    {room.name}
-                  </span>
+                  <div className="relative aspect-[4/3] w-full overflow-hidden">
+                    <Image
+                      src={room.image}
+                      alt={room.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="px-4 py-3">
+                    <span className="text-[14px] font-bold text-primary">
+                      {room.name}
+                    </span>
+                  </div>
                 </button>
               ))}
             </div>
@@ -727,17 +768,22 @@ export default function Home() {
               {DESIGN_STYLES.map((style) => (
                 <button
                   key={style.name}
-                  className={`group relative aspect-[4/3] overflow-hidden rounded-[12px] border border-border bg-gradient-to-br ${style.gradient} transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]`}
+                  className="group relative aspect-[4/3] overflow-hidden rounded-[12px] border border-border transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
                 >
-                  {/* Abstract shapes */}
-                  <div className="absolute inset-0 flex items-end justify-center p-4">
-                    <div className="flex gap-2 opacity-25">
-                      <div className="h-6 w-10 rounded-[6px] bg-primary/30" />
-                      <div className="h-8 w-6 rounded-[6px] bg-primary/20" />
-                      <div className="h-5 w-8 rounded-[6px] bg-primary/25" />
-                    </div>
-                  </div>
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary/70 to-transparent p-4 pt-8">
+                  {style.images.map((img, imgIdx) => (
+                    <Image
+                      key={img}
+                      src={img}
+                      alt={`${style.name} style ${imgIdx + 1}`}
+                      fill
+                      className={`object-cover transition-all duration-[1200ms] ease-in-out group-hover:scale-105 ${
+                        imgIdx === styleImageIndex
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }`}
+                    />
+                  ))}
+                  <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/70 to-transparent p-4 pt-8">
                     <span className="text-[14px] font-bold text-white">
                       {style.name}
                     </span>
