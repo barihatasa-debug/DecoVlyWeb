@@ -583,21 +583,21 @@ export default function Home() {
               ].map((item, i) => (
                 <div
                   key={item.step}
-                  className="group relative rounded-[12px] border border-border bg-white p-8 transition-all duration-300 hover:border-accent/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
+                  className="group relative overflow-hidden rounded-[12px] border border-border bg-white p-8 pt-10 transition-all duration-300 hover:border-accent/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
                   style={{ animationDelay: `${i * 0.15}s` }}
                 >
-                  {/* Step number */}
-                  <span className="absolute -top-3.5 left-8 rounded-full bg-accent px-3 py-1 text-xs font-bold text-white">
+                  {/* Large background step number */}
+                  <span className="pointer-events-none absolute -right-2 -top-4 text-[120px] font-black leading-none text-accent/40 transition-colors duration-300 group-hover:text-accent/50">
                     {item.step}
                   </span>
                   {/* Icon */}
-                  <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-[12px] bg-accent-soft text-accent transition-colors group-hover:bg-accent group-hover:text-white">
+                  <div className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-[12px] bg-accent-soft text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                     {item.icon}
                   </div>
-                  <h3 className="text-[20px] font-bold tracking-[-0.01em] text-primary">
+                  <h3 className="relative text-[20px] font-bold tracking-[-0.01em] text-primary">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-[16px] leading-[1.6] text-text-light">
+                  <p className="relative mt-2 text-[16px] leading-[1.6] text-text-light">
                     {item.desc}
                   </p>
                 </div>
