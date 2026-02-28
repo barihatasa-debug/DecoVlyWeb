@@ -133,6 +133,19 @@
       box-shadow: 0 0 10px rgba(74,222,128,0.9), 0 0 20px rgba(74,222,128,0.5);
     }
 
+    /* Marquee slide animations */
+    @keyframes marqueeLeft {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes marqueeRight {
+      0% { transform: translateX(-50%); }
+      100% { transform: translateX(0); }
+    }
+    .marquee-left { animation: marqueeLeft 30s linear infinite; }
+    .marquee-right { animation: marqueeRight 30s linear infinite; }
+    .marquee-left:hover, .marquee-right:hover { animation-play-state: paused; }
+
     /* Slide indicator dots */
     .slide-dot {
       width: 5px; height: 5px; border-radius: 50%;
@@ -302,17 +315,13 @@
       const [activeIdx, setActiveIdx] = useState(0);
 
       useEffect(() => {
-        // Stagger start per card
+        let intervalId;
         const timeout = setTimeout(() => {
-          const interval = setInterval(() => {
+          intervalId = setInterval(() => {
             setActiveIdx((prev) => (prev + 1) % room.images.length);
           }, 4000);
-          return () => clearInterval(interval);
         }, delay);
-        const interval = setInterval(() => {
-          setActiveIdx((prev) => (prev + 1) % room.images.length);
-        }, 4000);
-        return () => { clearTimeout(timeout); clearInterval(interval); };
+        return () => { clearTimeout(timeout); if (intervalId) clearInterval(intervalId); };
       }, [room.images.length, delay]);
 
       return (
@@ -1007,13 +1016,15 @@
                 <span className="text-[13px] font-semibold text-brown-light uppercase tracking-wide">Room Types</span>
               </div>
 
-              {/* Room Types — grid */}
-              <div className="sr-left grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-12">
-                {ROOM_TYPES.map((room, i) => (
-                  <div key={room.name} style={{ transitionDelay: `${i * 0.05}s` }}>
-                    <RoomCard room={room} delay={i * 800} />
-                  </div>
-                ))}
+              {/* Room Types — sliding right marquee */}
+              <div className="sr overflow-hidden mb-12 -mx-6">
+                <div className="marquee-right flex gap-4 w-max px-2">
+                  {[...ROOM_TYPES, ...ROOM_TYPES].map((room, i) => (
+                    <div key={`${room.name}-${i}`} className="flex-shrink-0 w-[200px] sm:w-[240px]">
+                      <RoomCard room={room} delay={i * 600} />
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Design Styles label */}
@@ -1021,36 +1032,38 @@
                 <span className="text-[13px] font-semibold text-brown-light uppercase tracking-wide">Design Styles</span>
               </div>
 
-              {/* Design Styles — row 1 (first 5) */}
-              <div className="sr-right grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-4">
-                {DESIGN_STYLES.slice(0, 5).map((style, i) => (
-                  <div
-                    key={style.name}
-                    className="relative aspect-[3/4] rounded-[16px] overflow-hidden cursor-pointer card-hover"
-                    style={{ transitionDelay: `${i * 0.05}s` }}
-                  >
-                    <img src={style.image} alt={style.name} className="img-cover transition-transform duration-500 hover:scale-105" />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3.5 pt-10">
-                      <span className="text-[14px] font-bold text-white">{style.name}</span>
+              {/* Design Styles — row 1 sliding left */}
+              <div className="sr overflow-hidden mb-4 -mx-6">
+                <div className="marquee-left flex gap-4 w-max px-2">
+                  {[...DESIGN_STYLES.slice(0, 5), ...DESIGN_STYLES.slice(0, 5)].map((style, i) => (
+                    <div
+                      key={`${style.name}-${i}`}
+                      className="flex-shrink-0 w-[150px] sm:w-[180px] relative aspect-[3/4] rounded-[16px] overflow-hidden cursor-pointer card-hover"
+                    >
+                      <img src={style.image} alt={style.name} className="img-cover" style={{ objectPosition: 'center 50%' }} />
+                      <div className="absolute inset-x-0 bottom-0 p-3.5 pt-10" style={{ background: 'linear-gradient(to top, rgba(44,36,24,0.7) 0%, rgba(44,36,24,0.3) 50%, transparent 100%)' }}>
+                        <span className="text-[14px] font-bold text-white drop-shadow-sm">{style.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
-              {/* Design Styles — row 2 (last 5) */}
-              <div className="sr grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                {DESIGN_STYLES.slice(5).map((style, i) => (
-                  <div
-                    key={style.name}
-                    className="relative aspect-[3/4] rounded-[16px] overflow-hidden cursor-pointer card-hover"
-                    style={{ transitionDelay: `${i * 0.05}s` }}
-                  >
-                    <img src={style.image} alt={style.name} className="img-cover transition-transform duration-500 hover:scale-105" />
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-3.5 pt-10">
-                      <span className="text-[14px] font-bold text-white">{style.name}</span>
+              {/* Design Styles — row 2 sliding right */}
+              <div className="sr overflow-hidden -mx-6">
+                <div className="marquee-right flex gap-4 w-max px-2" style={{ animationDuration: '35s' }}>
+                  {[...DESIGN_STYLES.slice(5), ...DESIGN_STYLES.slice(5)].map((style, i) => (
+                    <div
+                      key={`${style.name}-${i}`}
+                      className="flex-shrink-0 w-[150px] sm:w-[180px] relative aspect-[3/4] rounded-[16px] overflow-hidden cursor-pointer card-hover"
+                    >
+                      <img src={style.image} alt={style.name} className="img-cover" style={{ objectPosition: 'center 50%' }} />
+                      <div className="absolute inset-x-0 bottom-0 p-3.5 pt-10" style={{ background: 'linear-gradient(to top, rgba(44,36,24,0.7) 0%, rgba(44,36,24,0.3) 50%, transparent 100%)' }}>
+                        <span className="text-[14px] font-bold text-white drop-shadow-sm">{style.name}</span>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
               {/* Browse all link */}
