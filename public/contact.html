@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — Decoki</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#F9F7F2',
+            'cream-dark': '#F0EBE2',
+            coral: '#E8524E',
+            'coral-hover': '#D4443E',
+            'coral-light': '#F2856D',
+            brown: '#2C2418',
+            'brown-light': '#8B7E6E',
+            'brown-muted': '#A09484',
+            divider: '#EDE6D8',
+          },
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: #F9F7F2; color: #2C2418; }
+    ::selection { background: rgba(232,82,78,0.15); color: #2C2418; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #F9F7F2; }
+    ::-webkit-scrollbar-thumb { background: #EDE6D8; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #E8524E; }
+    .btn-gradient {
+      background: linear-gradient(135deg, #E8524E, #F2856D);
+      box-shadow: 0 4px 20px rgba(232,82,78,0.25);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(232,82,78,0.35);
+    }
+    .btn-gradient:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 4px 20px rgba(232,82,78,0.15);
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #E8524E;
+      box-shadow: 0 0 0 3px rgba(232,82,78,0.1);
+    }
+    @keyframes checkIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function App() {
+      const [form, setForm] = useState({ name: '', email: '', subject: 'general', message: '' });
+      const [submitted, setSubmitted] = useState(false);
+      const [sending, setSending] = useState(false);
+
+      const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setSending(true);
+        // Simulate send
+        setTimeout(() => {
+          setSending(false);
+          setSubmitted(true);
+        }, 1500);
+      };
+
+      const canSubmit = form.name.trim() && form.email.trim() && form.message.trim() && !sending;
+
+      return (
+        <div className="min-h-screen flex flex-col">
+          {/* Navigation */}
+          <nav className="sticky top-0 z-50 bg-cream/95 backdrop-blur-md border-b border-divider/50">
+            <div className="max-w-[1200px] mx-auto px-6 h-[68px] flex items-center justify-between">
+              <a href="/decoki.html" className="flex items-center gap-0.5 font-display text-[20px] font-bold text-brown">
+                Decoki<span className="inline-block w-[6px] h-[6px] rounded-full bg-coral ml-0.5 mb-2" />
+              </a>
+              <a href="/decoki.html" className="text-[14px] font-medium text-brown-light hover:text-coral transition-colors">
+                &larr; Back to Home
+              </a>
+            </div>
+          </nav>
+
+          {/* Main content */}
+          <main className="flex-1 py-16 md:py-24">
+            <div className="max-w-[1200px] mx-auto px-6">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
+
+                {/* Left — Info */}
+                <div>
+                  <span className="inline-block text-[11px] font-bold tracking-[0.15em] uppercase text-coral mb-3">
+                    Get in Touch
+                  </span>
+                  <h1 className="font-display font-bold text-[36px] sm:text-[44px] text-brown leading-tight tracking-[-0.02em]">
+                    We'd love to<br />hear from you
+                  </h1>
+                  <p className="mt-5 text-[16px] text-brown-light leading-[1.7] max-w-[420px]">
+                    Have a question, feedback, or partnership inquiry? Drop us a message and we'll get back to you within 24 hours.
+                  </p>
+
+                  {/* Contact cards */}
+                  <div className="mt-10 space-y-4">
+                    {/* Email */}
+                    <div className="flex items-start gap-4 p-5 bg-white rounded-[16px] shadow-[0_2px_20px_rgba(44,36,24,0.06)]">
+                      <div className="w-10 h-10 rounded-[10px] bg-coral/10 flex items-center justify-center flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8524E" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="2" y="4" width="20" height="16" rx="2" />
+                          <path d="M22 7l-10 7L2 7" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-[15px] font-semibold text-brown">Email</h3>
+                        <a href="mailto:hello@decoki.app" className="text-[14px] text-coral hover:text-coral-hover transition-colors">
+                          hello@decoki.app
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Response time */}
+                    <div className="flex items-start gap-4 p-5 bg-white rounded-[16px] shadow-[0_2px_20px_rgba(44,36,24,0.06)]">
+                      <div className="w-10 h-10 rounded-[10px] bg-coral/10 flex items-center justify-center flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8524E" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10" />
+                          <path d="M12 6v6l4 2" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-[15px] font-semibold text-brown">Response Time</h3>
+                        <p className="text-[14px] text-brown-light">Usually within 24 hours</p>
+                      </div>
+                    </div>
+
+                    {/* Social */}
+                    <div className="flex items-start gap-4 p-5 bg-white rounded-[16px] shadow-[0_2px_20px_rgba(44,36,24,0.06)]">
+                      <div className="w-10 h-10 rounded-[10px] bg-coral/10 flex items-center justify-center flex-shrink-0">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8524E" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="text-[15px] font-semibold text-brown">Social Media</h3>
+                        <div className="flex gap-3 mt-1">
+                          <a href="#" className="text-[13px] text-coral hover:text-coral-hover transition-colors">Instagram</a>
+                          <a href="#" className="text-[13px] text-coral hover:text-coral-hover transition-colors">Twitter</a>
+                          <a href="#" className="text-[13px] text-coral hover:text-coral-hover transition-colors">TikTok</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right — Form */}
+                <div>
+                  {!submitted ? (
+                    <form onSubmit={handleSubmit} className="bg-white rounded-[20px] shadow-[0_2px_20px_rgba(44,36,24,0.06)] p-8 sm:p-10">
+                      <h2 className="font-display font-bold text-[22px] text-brown mb-6">Send a Message</h2>
+
+                      <div className="space-y-5">
+                        {/* Name */}
+                        <div>
+                          <label className="block text-[13px] font-semibold text-brown mb-1.5">Your Name</label>
+                          <input
+                            type="text"
+                            name="name"
+                            value={form.name}
+                            onChange={handleChange}
+                            placeholder="John Doe"
+                            className="w-full h-[48px] px-4 rounded-[12px] border border-divider bg-cream/40 text-[15px] text-brown placeholder:text-brown-light/50 transition-all duration-200"
+                          />
+                        </div>
+
+                        {/* Email */}
+                        <div>
+                          <label className="block text-[13px] font-semibold text-brown mb-1.5">Email Address</label>
+                          <input
+                            type="email"
+                            name="email"
+                            value={form.email}
+                            onChange={handleChange}
+                            placeholder="john@example.com"
+                            className="w-full h-[48px] px-4 rounded-[12px] border border-divider bg-cream/40 text-[15px] text-brown placeholder:text-brown-light/50 transition-all duration-200"
+                          />
+                        </div>
+
+                        {/* Subject */}
+                        <div>
+                          <label className="block text-[13px] font-semibold text-brown mb-1.5">Subject</label>
+                          <select
+                            name="subject"
+                            value={form.subject}
+                            onChange={handleChange}
+                            className="w-full h-[48px] px-4 rounded-[12px] border border-divider bg-cream/40 text-[15px] text-brown transition-all duration-200 appearance-none"
+                            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%238B7E6E' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 16px center' }}
+                          >
+                            <option value="general">General Inquiry</option>
+                            <option value="support">Technical Support</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="partnership">Partnership</option>
+                            <option value="press">Press & Media</option>
+                            <option value="bug">Report a Bug</option>
+                          </select>
+                        </div>
+
+                        {/* Message */}
+                        <div>
+                          <label className="block text-[13px] font-semibold text-brown mb-1.5">Message</label>
+                          <textarea
+                            name="message"
+                            value={form.message}
+                            onChange={handleChange}
+                            placeholder="Tell us what's on your mind..."
+                            rows="5"
+                            className="w-full px-4 py-3 rounded-[12px] border border-divider bg-cream/40 text-[15px] text-brown placeholder:text-brown-light/50 transition-all duration-200 resize-none"
+                          />
+                        </div>
+
+                        {/* Submit */}
+                        <button
+                          type="submit"
+                          disabled={!canSubmit}
+                          className="btn-gradient w-full h-[52px] rounded-[14px] text-white text-[15px] font-semibold flex items-center justify-center gap-2"
+                        >
+                          {sending ? (
+                            <>
+                              <svg className="animate-spin" width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="2.5" opacity="0.3" />
+                                <path d="M12 2a10 10 0 019.75 7.75" stroke="white" strokeWidth="2.5" strokeLinecap="round" />
+                              </svg>
+                              Sending...
+                            </>
+                          ) : (
+                            'Send Message'
+                          )}
+                        </button>
+                      </div>
+
+                      <p className="mt-4 text-[12px] text-brown-light text-center">
+                        By submitting, you agree to our{' '}
+                        <a href="/privacy.html" className="text-coral hover:text-coral-hover transition-colors">Privacy Policy</a>.
+                      </p>
+                    </form>
+                  ) : (
+                    <div className="bg-white rounded-[20px] shadow-[0_2px_20px_rgba(44,36,24,0.06)] p-8 sm:p-10 flex flex-col items-center justify-center text-center min-h-[480px]">
+                      <div
+                        className="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center mb-5"
+                        style={{ animation: 'checkIn 0.4s cubic-bezier(0.22,1,0.36,1)' }}
+                      >
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                          <path d="M7 14.5L12 19.5L21 9.5" stroke="#22C55E" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                      <h2 className="font-display font-bold text-[24px] text-brown">Message Sent!</h2>
+                      <p className="mt-3 text-[15px] text-brown-light max-w-[320px] leading-[1.6]">
+                        Thank you for reaching out. We'll get back to you at <strong className="text-brown">{form.email}</strong> within 24 hours.
+                      </p>
+                      <button
+                        onClick={() => { setSubmitted(false); setForm({ name: '', email: '', subject: 'general', message: '' }); }}
+                        className="mt-8 text-[14px] font-semibold text-coral hover:text-coral-hover transition-colors"
+                      >
+                        Send another message
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </main>
+
+          {/* Footer */}
+          <footer className="bg-brown">
+            <div className="max-w-[1200px] mx-auto px-6 py-8">
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
+                <div className="flex items-center gap-0.5 font-display text-[16px] font-bold text-[#F9F7F2]">
+                  Decoki<span className="inline-block w-[5px] h-[5px] rounded-full bg-coral ml-0.5 mb-1" />
+                </div>
+                <span className="text-[12px] text-brown-muted">&copy; 2026 Decoki. All rights reserved.</span>
+              </div>
+            </div>
+          </footer>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(React.createElement(App));
+  </script>
+</body>
+</html>

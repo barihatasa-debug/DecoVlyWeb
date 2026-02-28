@@ -157,6 +157,9 @@
       width: 14px; border-radius: 3px;
     }
 
+    /* Image cover helper */
+    .img-cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
     /* Selection */
     ::selection { background: rgba(232,82,78,0.15); color: #2C2418; }
 
@@ -265,33 +268,35 @@
 
       return (
         <div className="flex flex-col gap-2.5">
+          {/* Padding-based aspect ratio container for cross-browser support */}
           <div
             ref={containerRef}
             className="relative w-full rounded-[20px] overflow-hidden cursor-col-resize select-none shadow-[0_4px_24px_rgba(44,36,24,0.12)]"
-            style={{ aspectRatio: '4/3' }}
+            style={{ paddingBottom: '56.25%' }}
             onMouseDown={() => { isDragging.current = true; }}
             onTouchStart={() => { isDragging.current = true; }}
           >
             {/* After (full bg) */}
-            <img src={afterImg} alt="After" className="img-cover" style={{ objectPosition: 'center 60%' }} draggable="false" />
+            <img src={afterImg} alt="After" draggable="false"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%' }}
+            />
             {/* Before (clipped) */}
-            <div
-              className="absolute inset-0"
-              style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
-            >
-              <img src={beforeImg} alt="Before" className="img-cover" style={{ objectPosition: 'center 60%' }} draggable="false" />
+            <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
+              <img src={beforeImg} alt="Before" draggable="false"
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%' }}
+              />
             </div>
             {/* Labels */}
-            <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white bg-brown/70 backdrop-blur-sm">
+            <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white bg-brown/70 backdrop-blur-sm z-10">
               Before
             </span>
-            <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white bg-coral/80 backdrop-blur-sm">
+            <span className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[11px] font-semibold text-white bg-coral/80 backdrop-blur-sm z-10">
               After
             </span>
             {/* Slider line + handle */}
-            <div className="absolute top-0 bottom-0" style={{ left: `${pos}%`, transform: 'translateX(-50%)' }}>
-              <div className="w-[2px] h-full bg-white/80" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white shadow-lg flex items-center justify-center">
+            <div className="absolute top-0 bottom-0 z-10" style={{ left: `${pos}%`, transform: 'translateX(-50%)' }}>
+              <div className="w-[2px] h-full bg-white/90" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white shadow-lg flex items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                   <path d="M4.5 3L1.5 7L4.5 11" stroke="#2C2418" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   <path d="M9.5 3L12.5 7L9.5 11" stroke="#2C2418" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -325,25 +330,25 @@
       }, [room.images.length, delay]);
 
       return (
-        <div className="relative aspect-[4/3] rounded-[16px] overflow-hidden cursor-pointer card-hover">
+        <div className="relative rounded-[16px] overflow-hidden cursor-pointer card-hover" style={{ paddingBottom: '75%' }}>
           {room.images.map((img, idx) => (
             <img
               key={idx}
               src={img}
               alt={room.name}
-              className="absolute inset-0 w-full h-full transition-opacity duration-[2000ms] ease-in-out"
-              style={{
-                objectFit: 'cover',
-                objectPosition: 'center 60%',
-                opacity: idx === activeIdx ? 1 : 0,
-              }}
               draggable="false"
+              style={{
+                position: 'absolute', inset: 0, width: '100%', height: '100%',
+                objectFit: 'cover', objectPosition: 'center 40%',
+                opacity: idx === activeIdx ? 1 : 0,
+                transition: 'opacity 2s ease-in-out',
+              }}
             />
           ))}
           {/* Warm gradient overlay at bottom */}
           <div
-            className="absolute inset-x-0 bottom-0 p-4 pt-12"
-            style={{ background: 'linear-gradient(to top, rgba(44,36,24,0.7) 0%, rgba(44,36,24,0.35) 50%, transparent 100%)' }}
+            className="absolute inset-x-0 bottom-0 p-4 pt-12 z-10"
+            style={{ background: 'linear-gradient(to top, rgba(44,36,24,0.75) 0%, rgba(44,36,24,0.3) 50%, transparent 100%)' }}
           >
             <span className="text-[15px] font-bold text-white drop-shadow-sm">{room.name}</span>
           </div>
@@ -1038,10 +1043,13 @@
                   {[...DESIGN_STYLES.slice(0, 5), ...DESIGN_STYLES.slice(0, 5)].map((style, i) => (
                     <div
                       key={`${style.name}-${i}`}
-                      className="flex-shrink-0 w-[150px] sm:w-[180px] relative aspect-[3/4] rounded-[16px] overflow-hidden cursor-pointer card-hover"
+                      className="flex-shrink-0 w-[150px] sm:w-[180px] relative rounded-[16px] overflow-hidden cursor-pointer card-hover"
+                      style={{ paddingBottom: '200px' }}
                     >
-                      <img src={style.image} alt={style.name} className="img-cover" style={{ objectPosition: 'center 50%' }} />
-                      <div className="absolute inset-x-0 bottom-0 p-3.5 pt-10" style={{ background: 'linear-gradient(to top, rgba(44,36,24,0.7) 0%, rgba(44,36,24,0.3) 50%, transparent 100%)' }}>
+                      <img src={style.image} alt={style.name}
+                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%' }}
+                      />
+                      <div className="absolute inset-x-0 bottom-0 p-3.5 pt-10 z-10" style={{ background: 'linear-gradient(to top, rgba(44,36,24,0.75) 0%, rgba(44,36,24,0.3) 50%, transparent 100%)' }}>
                         <span className="text-[14px] font-bold text-white drop-shadow-sm">{style.name}</span>
                       </div>
                     </div>
@@ -1055,10 +1063,13 @@
                   {[...DESIGN_STYLES.slice(5), ...DESIGN_STYLES.slice(5)].map((style, i) => (
                     <div
                       key={`${style.name}-${i}`}
-                      className="flex-shrink-0 w-[150px] sm:w-[180px] relative aspect-[3/4] rounded-[16px] overflow-hidden cursor-pointer card-hover"
+                      className="flex-shrink-0 w-[150px] sm:w-[180px] relative rounded-[16px] overflow-hidden cursor-pointer card-hover"
+                      style={{ paddingBottom: '200px' }}
                     >
-                      <img src={style.image} alt={style.name} className="img-cover" style={{ objectPosition: 'center 50%' }} />
-                      <div className="absolute inset-x-0 bottom-0 p-3.5 pt-10" style={{ background: 'linear-gradient(to top, rgba(44,36,24,0.7) 0%, rgba(44,36,24,0.3) 50%, transparent 100%)' }}>
+                      <img src={style.image} alt={style.name}
+                        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%' }}
+                      />
+                      <div className="absolute inset-x-0 bottom-0 p-3.5 pt-10 z-10" style={{ background: 'linear-gradient(to top, rgba(44,36,24,0.75) 0%, rgba(44,36,24,0.3) 50%, transparent 100%)' }}>
                         <span className="text-[14px] font-bold text-white drop-shadow-sm">{style.name}</span>
                       </div>
                     </div>
@@ -1076,7 +1087,92 @@
             </div>
           </section>
 
-          {/* ═══ SECTION 6: FAQ ═══ */}
+          {/* ═══ SECTION 6: TESTIMONIALS ═══ */}
+          <section className="bg-brown py-20 md:py-28 overflow-hidden">
+            <div className="max-w-[1200px] mx-auto px-6">
+              <div className="text-center mb-14">
+                <span className="sr inline-block text-[11px] font-bold tracking-[0.15em] uppercase text-coral mb-3">
+                  Testimonials
+                </span>
+                <h2 className="sr font-display font-bold text-[30px] sm:text-[36px] text-[#F9F7F2] leading-tight">
+                  Loved by homeowners
+                </h2>
+                <p className="sr text-[15px] md:text-[16px] text-brown-muted mt-3">
+                  See what our users are saying
+                </p>
+              </div>
+
+              <div className="sr grid md:grid-cols-3 gap-5">
+                {[
+                  {
+                    name: 'Sarah M.',
+                    role: 'Interior enthusiast',
+                    text: 'I completely redesigned my living room before even buying a single piece of furniture. The AI results were shockingly realistic — my contractor thought I hired a designer.',
+                    stars: 5,
+                  },
+                  {
+                    name: 'David K.',
+                    role: 'Homeowner',
+                    text: 'The wall recolor feature saved me from painting my bedroom the wrong shade of blue. Tried 10 colors in 2 minutes instead of buying sample cans. Absolute game changer.',
+                    stars: 5,
+                  },
+                  {
+                    name: 'Emma L.',
+                    role: 'Real estate agent',
+                    text: 'I use Decoki to show clients the potential of empty properties. Upload a photo, pick a style, and suddenly a bare room looks like a magazine spread. My listings sell faster now.',
+                    stars: 5,
+                  },
+                  {
+                    name: 'James R.',
+                    role: 'DIY renovator',
+                    text: 'Replaced my old couch virtually before committing to buy a new one. The replace object feature is incredible — it blends perfectly with the existing room.',
+                    stars: 5,
+                  },
+                  {
+                    name: 'Aisha T.',
+                    role: 'Apartment renter',
+                    text: 'Even as a renter I can dream up my perfect space. Tried Japanese, Scandinavian, and Bohemian on my tiny studio — the Scandi look won. Moving forward with it!',
+                    stars: 5,
+                  },
+                  {
+                    name: 'Marco B.',
+                    role: 'Architect',
+                    text: 'I was skeptical at first, but the quality blew me away. I now use it for rapid concept presentations to clients. 30 seconds per variation instead of hours in 3D software.',
+                    stars: 5,
+                  },
+                ].map((t, i) => (
+                  <div
+                    key={i}
+                    className="bg-white/[0.06] backdrop-blur-sm border border-white/[0.08] rounded-[20px] p-6 flex flex-col"
+                    style={{ transitionDelay: `${i * 0.08}s` }}
+                  >
+                    {/* Stars */}
+                    <div className="flex gap-0.5 mb-4">
+                      {Array.from({ length: t.stars }).map((_, s) => (
+                        <span key={s} className="text-coral text-[14px]">★</span>
+                      ))}
+                    </div>
+                    {/* Quote */}
+                    <p className="text-[14px] text-[#F9F7F2]/80 leading-relaxed flex-1">
+                      "{t.text}"
+                    </p>
+                    {/* Author */}
+                    <div className="flex items-center gap-3 mt-5 pt-5 border-t border-white/[0.08]">
+                      <div className="w-10 h-10 rounded-full bg-coral/20 flex items-center justify-center flex-shrink-0">
+                        <span className="text-[14px] font-bold text-coral">{t.name.charAt(0)}</span>
+                      </div>
+                      <div>
+                        <div className="text-[13px] font-semibold text-[#F9F7F2]">{t.name}</div>
+                        <div className="text-[11px] text-brown-muted">{t.role}</div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ═══ SECTION 7: FAQ ═══ */}
           <section id="faq" className="py-20 md:py-28">
             <div className="max-w-[640px] mx-auto px-6">
               <div className="text-center mb-12">
@@ -1204,9 +1300,9 @@
                   <div>
                     <h4 className="text-[11px] font-bold tracking-[0.12em] uppercase text-brown-light mb-3">Legal</h4>
                     <div className="flex flex-col gap-2">
-                      {['Privacy Policy', 'Terms of Service', 'Contact'].map((l) => (
-                        <a key={l} href="#" className="text-[13px] text-brown-light hover:text-brown transition-colors">{l}</a>
-                      ))}
+                      <a href="/privacy.html" className="text-[13px] text-brown-light hover:text-brown transition-colors">Privacy Policy</a>
+                      <a href="#" className="text-[13px] text-brown-light hover:text-brown transition-colors">Terms of Service</a>
+                      <a href="/contact.html" className="text-[13px] text-brown-light hover:text-brown transition-colors">Contact</a>
                     </div>
                   </div>
                 </div>
