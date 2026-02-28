@@ -704,71 +704,55 @@ export default function Home() {
         </section>
 
         {/* ═══════════════════════════════════════
-            ROOM TYPES
+            ROOMS & STYLES — Combined Section
             ═══════════════════════════════════════ */}
-        <section id="rooms" className="py-20 lg:py-24">
-          <div className="mx-auto max-w-[1120px] px-6">
+        <section id="rooms" className="py-24 lg:py-32">
+          <div className="mx-auto max-w-[1200px] px-6">
             <div className="reveal mx-auto max-w-2xl text-center">
               <span className="text-[13px] font-bold tracking-widest text-accent uppercase">
-                Every Space
+                Explore
               </span>
               <h2 className="mt-3 text-[36px] font-extrabold leading-[1.15] tracking-[-0.02em] text-primary sm:text-[44px]">
-                Redesign Any Room
+                Any room. Any style.
               </h2>
               <p className="mt-4 text-[18px] leading-[1.6] text-text-light">
-                From kitchens to patios — every corner of your home can be
-                transformed.
+                From kitchens to gardens — every space can be transformed.
               </p>
             </div>
 
-            <div className="reveal mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {ROOM_TYPES.map((room) => (
+            {/* Row 1 — Room Types */}
+            <div className="reveal mt-16 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+              {ROOM_TYPES.map((room, i) => (
                 <button
                   key={room.name}
-                  className="group relative overflow-hidden rounded-[12px] border border-border bg-white transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
+                  className="group relative overflow-hidden rounded-[14px] border border-border bg-white transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-accent/20 hover:shadow-[0_12px_35px_rgba(0,0,0,0.08)]"
+                  style={{ animationDelay: `${i * 60}ms` }}
                 >
-                  <div className="relative aspect-[4/3] w-full overflow-hidden">
+                  <div className="relative aspect-[5/4] w-full overflow-hidden">
                     <Image
                       src={room.image}
                       alt={room.name}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover transition-transform duration-[800ms] ease-out group-hover:scale-[1.04]"
                     />
                   </div>
-                  <div className="px-4 py-3">
-                    <span className="text-[14px] font-bold text-primary">
+                  <div className="px-4 py-3.5">
+                    <span className="text-[15px] font-bold text-primary">
                       {room.name}
                     </span>
                   </div>
                 </button>
               ))}
             </div>
-          </div>
-        </section>
 
-        {/* ═══════════════════════════════════════
-            DESIGN STYLES
-            ═══════════════════════════════════════ */}
-        <section id="styles" className="bg-surface py-20 lg:py-24">
-          <div className="mx-auto max-w-[1120px] px-6">
-            <div className="reveal mx-auto max-w-2xl text-center">
-              <span className="text-[13px] font-bold tracking-widest text-accent uppercase">
-                Curated Collection
-              </span>
-              <h2 className="mt-3 text-[36px] font-extrabold leading-[1.15] tracking-[-0.02em] text-primary sm:text-[44px]">
-                50+ Design Styles
-              </h2>
-              <p className="mt-4 text-[18px] leading-[1.6] text-text-light">
-                Explore a world of aesthetics. Every style generates unique,
-                photorealistic results.
-              </p>
-            </div>
-
-            <div className="reveal mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {DESIGN_STYLES.map((style) => (
+            {/* Row 2 — Design Styles (first 8) */}
+            <div className="reveal mt-6 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+              {DESIGN_STYLES.slice(0, 8).map((style, i) => (
                 <button
                   key={style.name}
-                  className="group relative aspect-[4/3] overflow-hidden rounded-[12px] border border-border transition-all duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
+                  id="styles"
+                  className="group relative aspect-[5/4] overflow-hidden rounded-[14px] border border-border transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-accent/20 hover:shadow-[0_12px_35px_rgba(0,0,0,0.08)]"
+                  style={{ animationDelay: `${i * 60}ms` }}
                 >
                   {style.images.map((img, imgIdx) => (
                     <Image
@@ -776,15 +760,15 @@ export default function Home() {
                       src={img}
                       alt={`${style.name} style ${imgIdx + 1}`}
                       fill
-                      className={`object-cover transition-all duration-[1200ms] ease-in-out group-hover:scale-105 ${
+                      className={`object-cover transition-all duration-[1400ms] ease-in-out group-hover:scale-[1.04] ${
                         imgIdx === styleImageIndex
                           ? "opacity-100"
                           : "opacity-0"
                       }`}
                     />
                   ))}
-                  <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/70 to-transparent p-4 pt-8">
-                    <span className="text-[14px] font-bold text-white">
+                  <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/60 to-transparent p-4 pt-10">
+                    <span className="text-[15px] font-bold text-white">
                       {style.name}
                     </span>
                   </div>
@@ -792,13 +776,43 @@ export default function Home() {
               ))}
             </div>
 
-            <div className="mt-10 text-center">
+            {/* Row 3 — Design Styles (last 4) + Browse CTA */}
+            <div className="reveal mt-6 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+              {DESIGN_STYLES.slice(8).map((style, i) => (
+                <button
+                  key={style.name}
+                  className="group relative aspect-[5/4] overflow-hidden rounded-[14px] border border-border transition-all duration-500 ease-out hover:-translate-y-1.5 hover:border-accent/20 hover:shadow-[0_12px_35px_rgba(0,0,0,0.08)]"
+                  style={{ animationDelay: `${i * 60}ms` }}
+                >
+                  {style.images.map((img, imgIdx) => (
+                    <Image
+                      key={img}
+                      src={img}
+                      alt={`${style.name} style ${imgIdx + 1}`}
+                      fill
+                      className={`object-cover transition-all duration-[1400ms] ease-in-out group-hover:scale-[1.04] ${
+                        imgIdx === styleImageIndex
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }`}
+                    />
+                  ))}
+                  <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/60 to-transparent p-4 pt-10">
+                    <span className="text-[15px] font-bold text-white">
+                      {style.name}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
               <a
                 href="#"
-                className="inline-flex items-center gap-2 text-[14px] font-bold text-accent transition-colors hover:text-accent-hover"
+                className="inline-flex items-center gap-2 text-[15px] font-bold text-accent transition-colors hover:text-accent-hover"
               >
-                Browse All 50+ Styles
-                <ArrowRightIcon className="h-4 w-4" />
+                Browse all 50+ styles
+                <ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
             </div>
           </div>
