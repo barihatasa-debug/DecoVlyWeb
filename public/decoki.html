@@ -1280,6 +1280,30 @@
                   </p>
                 </div>
 
+                {/* Before / After Mini Proof */}
+                <div className="sr" style={{maxWidth:'28rem', margin:'3rem auto 0'}}>
+                  <div className="relative overflow-hidden rounded-2xl" style={{boxShadow:'0 20px 60px rgba(44,36,24,0.12)'}}>
+                    <div className="grid grid-cols-2">
+                      <div className="relative">
+                        <img src="/decoki/transform-1-before.jpg" alt="Room before Decoki" className="w-full object-cover" style={{height:'13rem'}} />
+                        <span className="absolute bottom-3 left-3 rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white" style={{background:'rgba(0,0,0,0.5)', backdropFilter:'blur(4px)'}}>
+                          Before
+                        </span>
+                      </div>
+                      <div className="relative">
+                        <img src="/decoki/transform-1-after.jpg" alt="Room after Decoki" className="w-full object-cover" style={{height:'13rem'}} />
+                        <span className="absolute bottom-3 right-3 rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white" style={{background:'rgba(232,82,78,0.9)', backdropFilter:'blur(4px)'}}>
+                          After
+                        </span>
+                      </div>
+                    </div>
+                    <div className="absolute inset-y-0 left-1/2 w-[2px] -translate-x-1/2 bg-white/80" />
+                  </div>
+                  <p className="mt-3 text-center text-[12px] italic text-brown-muted">
+                    Real result — generated in under 30 seconds
+                  </p>
+                </div>
+
                 {/* Store Badges */}
                 <div className="sr flex flex-wrap justify-center gap-4 mt-10">
                   {/* App Store badge */}
@@ -1315,10 +1339,56 @@
                   </a>
                 </div>
 
-                <p className="sr text-[13px] text-brown-light mt-6 flex items-center justify-center gap-1.5">
-                  <span className="text-coral tracking-wide">★★★★★</span>
-                  <span>Loved by 50,000+ homeowners</span>
-                </p>
+                {/* Trust Signals */}
+                <div className="sr flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mt-10">
+                  <div className="flex items-center gap-1.5 text-[13px] font-medium text-brown-light">
+                    <svg className="w-4 h-4 text-coral" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    100% free
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[13px] font-medium text-brown-light">
+                    <svg className="w-4 h-4 text-coral" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    Results in 30 sec
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[13px] font-medium text-brown-light">
+                    <svg className="w-4 h-4 text-coral" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4-4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <line x1="19" y1="8" x2="19" y2="14" />
+                      <line x1="22" y1="11" x2="16" y2="11" />
+                    </svg>
+                    No account needed
+                  </div>
+                  <div className="flex items-center gap-1.5 text-[13px] font-medium text-brown-light">
+                    <svg className="w-4 h-4 text-coral" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0110 0v4" />
+                    </svg>
+                    Photos stay private
+                  </div>
+                </div>
+
+                {/* Featured Review */}
+                <div className="sr mx-auto mt-10 rounded-2xl border border-divider p-5" style={{maxWidth:'28rem', background:'rgba(255,255,255,0.5)', backdropFilter:'blur(8px)'}}>
+                  <div className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-[14px] font-bold text-coral shrink-0" style={{background:'rgba(232,82,78,0.1)'}}>
+                      S
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[13px] font-bold text-brown">Sarah M.</span>
+                        <span className="text-coral text-[12px]">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                      </div>
+                      <p className="mt-1 text-[13px] leading-[1.5] text-brown-light">
+                        "I was skeptical, but this app literally saved me thousands on an interior designer. Showed the results to my contractor and he couldn't believe it was AI."
+                      </p>
+                    </div>
+                  </div>
+                </div>
 
               </div>
             </div>
