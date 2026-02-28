@@ -768,6 +768,21 @@
           before: '/decoki/transform-3-before.jpg',
           after: '/decoki/transform-3-after.jpg',
         },
+        {
+          room: 'Bedroom', style: 'Recolor',
+          before: '/cards/recolor/before.jpg',
+          after: '/cards/recolor/after.jpg',
+        },
+        {
+          room: 'Living Room', style: 'Replace Object',
+          before: '/cards/replace/before.jpg',
+          after: '/cards/replace/after.jpg',
+        },
+        {
+          room: 'Kitchen', style: 'Color Replace',
+          before: '/cards/redesign/before.jpg',
+          after: '/cards/redesign/after.jpg',
+        },
       ];
 
       return (
@@ -981,12 +996,30 @@
                 </p>
               </div>
 
-              {/* Desktop grid / Mobile horizontal scroll */}
-              <div className="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto scroll-hide snap-x snap-mandatory pb-4 -mx-6 px-6 md:mx-0 md:px-0">
-                {TRANSFORMATIONS.map((t, i) => (
+              {/* Row 1 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-6">
+                {TRANSFORMATIONS.slice(0, 3).map((t, i) => (
                   <div
                     key={i}
-                    className="sr min-w-[280px] sm:min-w-[320px] md:min-w-0 snap-center flex-shrink-0"
+                    className="sr"
+                    style={{ transitionDelay: `${i * 0.1}s` }}
+                  >
+                    <BeforeAfterSlider
+                      beforeImg={t.before}
+                      afterImg={t.after}
+                      roomName={t.room}
+                      styleName={t.style}
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Row 2 */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {TRANSFORMATIONS.slice(3).map((t, i) => (
+                  <div
+                    key={i}
+                    className="sr"
                     style={{ transitionDelay: `${i * 0.1}s` }}
                   >
                     <BeforeAfterSlider
@@ -1253,52 +1286,52 @@
             </div>
 
             {/* Footer */}
-            <div className="border-t border-divider">
+            <div className="bg-brown">
               <div className="max-w-[1200px] mx-auto px-6 pt-10 pb-8">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4">
                   {/* Brand */}
                   <div className="col-span-2 md:col-span-1">
-                    <div className="flex items-center gap-0.5 font-display text-[18px] font-bold text-brown">
+                    <div className="flex items-center gap-0.5 font-display text-[18px] font-bold text-[#F9F7F2]">
                       Decoki<span className="inline-block w-[5px] h-[5px] rounded-full bg-coral ml-0.5 mb-1.5" />
                     </div>
-                    <p className="text-[13px] text-brown-light mt-2">AI-powered home redesign</p>
+                    <p className="text-[13px] text-[#A09484] mt-2">AI-powered home redesign</p>
                   </div>
 
                   {/* Product */}
                   <div>
-                    <h4 className="text-[11px] font-bold tracking-[0.12em] uppercase text-brown-light mb-3">Product</h4>
+                    <h4 className="text-[11px] font-bold tracking-[0.12em] uppercase text-[#A09484] mb-3">Product</h4>
                     <div className="flex flex-col gap-2">
                       {['How it Works', 'Design Styles', 'Room Types', 'Pricing'].map((l) => (
-                        <a key={l} href="#" className="text-[13px] text-brown-light hover:text-brown transition-colors">{l}</a>
+                        <a key={l} href="#" className="text-[13px] text-[#8B7E6E] hover:text-white transition-colors">{l}</a>
                       ))}
                     </div>
                   </div>
 
                   {/* Company */}
                   <div>
-                    <h4 className="text-[11px] font-bold tracking-[0.12em] uppercase text-brown-light mb-3">Company</h4>
+                    <h4 className="text-[11px] font-bold tracking-[0.12em] uppercase text-[#A09484] mb-3">Company</h4>
                     <div className="flex flex-col gap-2">
                       {['About', 'Blog', 'Careers', 'Press'].map((l) => (
-                        <a key={l} href="#" className="text-[13px] text-brown-light hover:text-brown transition-colors">{l}</a>
+                        <a key={l} href="#" className="text-[13px] text-[#8B7E6E] hover:text-white transition-colors">{l}</a>
                       ))}
                     </div>
                   </div>
 
                   {/* Legal */}
                   <div>
-                    <h4 className="text-[11px] font-bold tracking-[0.12em] uppercase text-brown-light mb-3">Legal</h4>
+                    <h4 className="text-[11px] font-bold tracking-[0.12em] uppercase text-[#A09484] mb-3">Legal</h4>
                     <div className="flex flex-col gap-2">
-                      <a href="/privacy.html" className="text-[13px] text-brown-light hover:text-brown transition-colors">Privacy Policy</a>
-                      <a href="/terms.html" className="text-[13px] text-brown-light hover:text-brown transition-colors">Terms of Service</a>
-                      <a href="/contact.html" className="text-[13px] text-brown-light hover:text-brown transition-colors">Contact</a>
+                      <a href="/privacy.html" className="text-[13px] text-[#8B7E6E] hover:text-white transition-colors">Privacy Policy</a>
+                      <a href="/terms.html" className="text-[13px] text-[#8B7E6E] hover:text-white transition-colors">Terms of Service</a>
+                      <a href="/contact.html" className="text-[13px] text-[#8B7E6E] hover:text-white transition-colors">Contact</a>
                     </div>
                   </div>
                 </div>
 
                 {/* Bottom bar */}
-                <div className="flex flex-col sm:flex-row items-center justify-between mt-10 pt-6 border-t border-divider gap-2">
-                  <span className="text-[12px] text-brown-light">&copy; 2026 Decoki. All rights reserved.</span>
-                  <span className="text-[12px] text-brown-light">Made with AI</span>
+                <div className="flex flex-col sm:flex-row items-center justify-between mt-10 pt-6 border-t border-[#3D3428] gap-2">
+                  <span className="text-[12px] text-[#A09484]">&copy; 2026 Decoki. All rights reserved.</span>
+                  <span className="text-[12px] text-[#A09484]">Made with AI</span>
                 </div>
               </div>
             </div>
