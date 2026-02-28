@@ -517,6 +517,8 @@
       { label: 'Redesign', before: 'cards/redesign/before.jpg', after: 'cards/redesign/after.jpg' },
       { label: 'Recolor', before: 'cards/recolor/before.jpg', after: 'cards/recolor/after.jpg' },
       { label: 'Replace Object', before: 'cards/replace/before.jpg', after: 'cards/replace/after.jpg' },
+      { label: 'New Flooring', before: 'cards/flooring/before.jpg', after: 'cards/flooring/after.jpg' },
+      { label: 'Garden Design', before: 'showcase/garden-before.png', after: 'showcase/garden-after.png' },
     ];
 
     function ScanRevealPhone() {
@@ -726,6 +728,7 @@
         { q: 'What rooms can I redesign?', a: 'Any room — living rooms, kitchens, bedrooms, bathrooms, offices, dining rooms, gardens, and exteriors.' },
         { q: 'How realistic are the results?', a: 'Our AI generates photorealistic designs. The output looks like professional interior design photography.' },
         { q: 'Can I replace specific furniture?', a: 'Yes. Our Replace Object feature lets you tap any furniture item and swap it with AI-generated alternatives.' },
+        { q: 'Can I change my flooring?', a: 'Yes! Our New Flooring feature lets you preview hardwood, marble, tile, vinyl plank, and 15+ other flooring styles on your actual room photo.' },
       ];
 
       const ROOM_TYPES = [
@@ -782,6 +785,11 @@
           room: 'Kitchen', style: 'Color Replace',
           before: '/cards/redesign/before.jpg',
           after: '/cards/redesign/after.jpg',
+        },
+        {
+          room: 'Room', style: 'New Flooring',
+          before: '/cards/flooring/before.jpg',
+          after: '/cards/flooring/after.jpg',
         },
       ];
 
