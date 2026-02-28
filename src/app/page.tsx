@@ -910,36 +910,111 @@ export default function Home() {
         </section>
 
         {/* ═══════════════════════════════════════
-            DOWNLOAD SECTION
+            DOWNLOAD SECTION — HIGH-CONVERTING CTA
             ═══════════════════════════════════════ */}
         <section
           id="download"
-          className="grain relative overflow-hidden py-20 lg:py-24"
+          className="grain relative overflow-hidden py-24 lg:py-32"
           style={{
             background:
-              "linear-gradient(135deg, #F5EFE6 0%, #EDE4D6 40%, #E3D5C0 100%)",
+              "linear-gradient(160deg, #F5EFE6 0%, #EDE4D6 30%, #E3D5C0 60%, #D9CCBA 100%)",
           }}
         >
-          {/* Decorative */}
-          <div className="pointer-events-none absolute -left-20 -top-20 h-80 w-80 rounded-full bg-[#D4C4A8]/30 blur-[100px]" />
+          {/* Decorative blurs */}
+          <div className="pointer-events-none absolute -left-20 -top-20 h-96 w-96 rounded-full bg-accent/[0.06] blur-[120px]" />
           <div className="pointer-events-none absolute -bottom-20 -right-20 h-80 w-80 rounded-full bg-[#E8D5B7]/40 blur-[100px]" />
+          <div className="pointer-events-none absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/[0.04] blur-[80px]" />
 
-          <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-            <h2 className="reveal text-[36px] font-extrabold leading-[1.15] tracking-[-0.02em] text-primary sm:text-[48px]">
-              Ready to Transform{" "}
-              <span className="text-accent">Your Space?</span>
-            </h2>
-            <p className="reveal mt-5 text-[18px] leading-[1.6] text-text-light">
-              Download DecoAI and start redesigning your rooms today. Available
-              on iOS and Android.
-            </p>
+          <div className="relative z-10 mx-auto max-w-4xl px-6">
+            {/* Social Proof Bar */}
+            <div className="reveal mb-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              <div className="flex items-center gap-2">
+                <div className="flex -space-x-2">
+                  {[
+                    "bg-amber-400",
+                    "bg-rose-400",
+                    "bg-sky-400",
+                    "bg-emerald-400",
+                  ].map((bg, i) => (
+                    <div
+                      key={i}
+                      className={`h-8 w-8 rounded-full ${bg} ring-2 ring-[#EDE4D6] flex items-center justify-center text-[11px] font-bold text-white`}
+                    >
+                      {["S", "M", "A", "J"][i]}
+                    </div>
+                  ))}
+                </div>
+                <span className="text-[13px] font-medium text-text-light">
+                  <strong className="text-primary">50,000+</strong> homeowners
+                </span>
+              </div>
+              <div className="hidden h-4 w-px bg-border sm:block" />
+              <div className="flex items-center gap-1.5">
+                <span className="text-accent tracking-wide text-[14px]">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                <span className="text-[13px] font-medium text-text-light">
+                  4.9 on App Store
+                </span>
+              </div>
+            </div>
+
+            {/* Headline */}
+            <div className="text-center">
+              <h2 className="reveal text-[36px] font-extrabold leading-[1.1] tracking-[-0.03em] text-primary sm:text-[50px] lg:text-[56px]">
+                Stop imagining.
+                <br />
+                <span className="text-accent">Start designing.</span>
+              </h2>
+              <p className="reveal mx-auto mt-6 max-w-lg text-[18px] leading-[1.6] text-text-light sm:text-[20px]">
+                One photo. Thirty seconds. A room you&apos;ll actually love.
+                <br className="hidden sm:block" />
+                <span className="font-medium text-primary">
+                  No design skills needed.
+                </span>
+              </p>
+            </div>
+
+            {/* Before / After Mini Proof */}
+            <div className="reveal mx-auto mt-12 max-w-md">
+              <div className="relative overflow-hidden rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.12)]">
+                <div className="grid grid-cols-2">
+                  <div className="relative">
+                    <Image
+                      src="/showcase/interior-before.png"
+                      alt="Room before DecoAI"
+                      width={400}
+                      height={300}
+                      className="h-44 w-full object-cover sm:h-52"
+                    />
+                    <span className="absolute bottom-3 left-3 rounded-full bg-black/50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+                      Before
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <Image
+                      src="/showcase/interior-after.png"
+                      alt="Room after DecoAI"
+                      width={400}
+                      height={300}
+                      className="h-44 w-full object-cover sm:h-52"
+                    />
+                    <span className="absolute bottom-3 right-3 rounded-full bg-accent/90 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+                      After
+                    </span>
+                  </div>
+                </div>
+                <div className="absolute inset-y-0 left-1/2 w-[2px] -translate-x-1/2 bg-white/80" />
+              </div>
+              <p className="mt-3 text-center text-[12px] italic text-muted">
+                Real result — generated in under 30 seconds
+              </p>
+            </div>
 
             {/* Store Badges */}
             <div className="reveal mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               {/* App Store */}
               <a
                 href="#"
-                className="inline-flex h-[58px] items-center gap-3 rounded-[12px] bg-primary px-6 transition-all hover:bg-primary-light hover:shadow-[0_10px_30px_rgba(0,0,0,0.15)]"
+                className="group inline-flex h-[62px] items-center gap-3 rounded-[14px] bg-primary px-7 shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-light hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)]"
               >
                 <svg className="h-7 w-7 text-white" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
@@ -957,7 +1032,7 @@ export default function Home() {
               {/* Google Play */}
               <a
                 href="#"
-                className="inline-flex h-[58px] items-center gap-3 rounded-[12px] bg-primary px-6 transition-all hover:bg-primary-light hover:shadow-[0_10px_30px_rgba(0,0,0,0.15)]"
+                className="group inline-flex h-[62px] items-center gap-3 rounded-[14px] bg-primary px-7 shadow-[0_4px_20px_rgba(0,0,0,0.15)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-light hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)]"
               >
                 <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
                   <path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92z" fill="#4285F4" />
@@ -976,9 +1051,78 @@ export default function Home() {
               </a>
             </div>
 
-            <p className="reveal mt-6 text-[13px] text-muted">
-              Free to download. No credit card required.
-            </p>
+            {/* Trust Signals */}
+            <div className="reveal mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              {[
+                {
+                  icon: (
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                  ),
+                  text: "100% free",
+                },
+                {
+                  icon: (
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                  ),
+                  text: "Results in 30 sec",
+                },
+                {
+                  icon: (
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2" />
+                      <circle cx="8.5" cy="7" r="4" />
+                      <line x1="20" y1="8" x2="20" y2="14" />
+                      <line x1="23" y1="11" x2="17" y2="11" />
+                    </svg>
+                  ),
+                  text: "No account needed",
+                },
+                {
+                  icon: (
+                    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                      <path d="M7 11V7a5 5 0 0110 0v4" />
+                    </svg>
+                  ),
+                  text: "Photos stay private",
+                },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-1.5 text-[13px] font-medium text-text-light"
+                >
+                  <span className="text-accent">{item.icon}</span>
+                  {item.text}
+                </div>
+              ))}
+            </div>
+
+            {/* Featured Review */}
+            <div className="reveal mx-auto mt-10 max-w-md rounded-2xl border border-border-soft bg-white/50 p-5 backdrop-blur-sm">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent/10 text-[14px] font-bold text-accent">
+                  S
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[13px] font-bold text-primary">
+                      Sarah M.
+                    </span>
+                    <span className="text-accent text-[12px]">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                  </div>
+                  <p className="mt-1 text-[13px] leading-[1.5] text-text-light">
+                    &ldquo;I was skeptical, but this app literally saved me
+                    thousands on an interior designer. Showed the results to my
+                    contractor and he couldn&apos;t believe it was AI.&rdquo;
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>
