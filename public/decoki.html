@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Redesign any room in seconds with AI. Upload a photo, pick a style, and get a photorealistic redesign. 50+ design styles, free to try." />
+  <meta property="og:title" content="Decoki — AI-Powered Home Redesign" />
+  <meta property="og:description" content="Upload a photo. Pick a style. Watch AI transform your space in 30 seconds." />
+  <meta property="og:type" content="website" />
   <title>Decoki — AI-Powered Home Redesign</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -100,7 +104,7 @@
 
     /* FAQ answer animation */
     .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
-    .faq-answer.open { max-height: 200px; }
+    .faq-answer.open { max-height: 400px; }
 
     /* Nav transition */
     .nav-solid { background: rgba(249,247,242,0.95); backdrop-filter: blur(12px); box-shadow: 0 1px 12px rgba(44,36,24,0.06); }
@@ -230,7 +234,7 @@
         );
         observer.observe(ref.current);
         return () => observer.disconnect();
-      }, []);
+      }, [ref, target, suffix, duration]);
 
       return value;
     }
@@ -244,26 +248,27 @@
       const isDragging = useRef(false);
 
       const handleMove = useCallback((clientX) => {
-        if (!isDragging.current || !containerRef.current) return;
+        if (!containerRef.current) return;
         const rect = containerRef.current.getBoundingClientRect();
         const x = clientX - rect.left;
         setPos(Math.max(2, Math.min(98, (x / rect.width) * 100)));
       }, []);
 
-      useEffect(() => {
+      const startDrag = useCallback(() => {
+        isDragging.current = true;
         const onMouseMove = (e) => handleMove(e.clientX);
         const onTouchMove = (e) => handleMove(e.touches[0].clientX);
-        const onUp = () => { isDragging.current = false; };
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('touchmove', onTouchMove, { passive: true });
-        document.addEventListener('mouseup', onUp);
-        document.addEventListener('touchend', onUp);
-        return () => {
+        const onUp = () => {
+          isDragging.current = false;
           document.removeEventListener('mousemove', onMouseMove);
           document.removeEventListener('touchmove', onTouchMove);
           document.removeEventListener('mouseup', onUp);
           document.removeEventListener('touchend', onUp);
         };
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('touchmove', onTouchMove, { passive: true });
+        document.addEventListener('mouseup', onUp);
+        document.addEventListener('touchend', onUp);
       }, [handleMove]);
 
       return (
@@ -273,16 +278,16 @@
             ref={containerRef}
             className="relative w-full rounded-[20px] overflow-hidden cursor-col-resize select-none shadow-[0_4px_24px_rgba(44,36,24,0.12)]"
             style={{ paddingBottom: '56.25%' }}
-            onMouseDown={() => { isDragging.current = true; }}
-            onTouchStart={() => { isDragging.current = true; }}
+            onMouseDown={startDrag}
+            onTouchStart={startDrag}
           >
             {/* After (full bg) */}
-            <img src={afterImg} alt="After" draggable="false"
+            <img src={afterImg} alt={`${roomName} after ${styleName} redesign`} draggable="false"
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%' }}
             />
             {/* Before (clipped) */}
             <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
-              <img src={beforeImg} alt="Before" draggable="false"
+              <img src={beforeImg} alt={`${roomName} before redesign`} draggable="false"
                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 40%' }}
               />
             </div>
@@ -700,6 +705,14 @@
         return () => window.removeEventListener('scroll', onScroll);
       }, []);
 
+      // Close mobile menu on Escape
+      useEffect(() => {
+        if (!mobileMenu) return;
+        const onKey = (e) => { if (e.key === 'Escape') setMobileMenu(false); };
+        document.addEventListener('keydown', onKey);
+        return () => document.removeEventListener('keydown', onKey);
+      }, [mobileMenu]);
+
       // Close mobile menu on nav click
       const navClick = (e) => {
         setMobileMenu(false);
@@ -790,6 +803,11 @@
 
       return (
         <div className="min-h-screen">
+          {/* Skip to content */}
+          <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:px-4 focus:py-2 focus:rounded focus:text-coral focus:font-semibold focus:shadow-lg" style={{clip: 'rect(0,0,0,0)', position: 'absolute'}}>
+            Skip to content
+          </a>
+
           {/* ═══ NAVIGATION ═══ */}
           <nav
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -857,6 +875,7 @@
           </nav>
 
           {/* ═══ SECTION 1: HERO ═══ */}
+          <main id="main-content">
           <section className="pt-[120px] pb-16 md:pt-[140px] md:pb-24 overflow-hidden">
             <div className="max-w-[1200px] mx-auto px-6">
               <div className="flex flex-col md:flex-row items-center gap-12 md:gap-8">
@@ -1115,7 +1134,7 @@
 
               {/* Browse all link */}
               <div className="sr text-center mt-10">
-                <a href="#" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-coral hover:text-coral-hover transition-colors">
+                <a href="#download" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-coral hover:text-coral-hover transition-colors">
                   Browse all 50+ styles
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </a>
@@ -1214,6 +1233,7 @@
                     {i > 0 && <div className="h-px bg-divider mx-6" />}
                     <button
                       onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                      aria-expanded={openFaq === i}
                       className="w-full flex items-center justify-between px-6 py-5 text-left hover:bg-cream/40 transition-colors"
                     >
                       <span className="text-[15px] font-semibold text-brown pr-4">{faq.q}</span>
@@ -1234,6 +1254,8 @@
               </div>
             </div>
           </section>
+
+          </main>
 
           {/* ═══ SECTION 8: FINAL CTA + FOOTER ═══ */}
           <section id="download" className="bg-cream-dark relative overflow-hidden">
@@ -1267,7 +1289,7 @@
                   <div className="hidden sm:block w-px h-4 bg-divider" />
                   <div className="flex items-center gap-1.5">
                     <span className="text-coral tracking-wide text-[14px]">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-                    <span className="text-[13px] font-medium text-brown-light">4.9 on App Store</span>
+                    <span className="text-[13px] font-medium text-brown-light">4.8 on App Store</span>
                   </div>
                 </div>
 
